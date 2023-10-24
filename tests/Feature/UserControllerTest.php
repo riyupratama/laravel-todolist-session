@@ -8,6 +8,14 @@ use Tests\TestCase;
 
 class UserControllerTest extends TestCase
 {
+    public function testLoginPageForMember()
+    {
+        $this->withSession([
+            'user' => 'riyu'
+        ])->get('/login')
+            ->assertRedirect('/');
+    }
+
     public function testLoginPage()
     {
         $this->get('/login')
@@ -43,5 +51,11 @@ class UserControllerTest extends TestCase
         ])->post('/logout')
             ->assertRedirect('/')
             ->assertSessionMissing('user');
+    }
+
+    public function testLogoutGuest()
+    {
+        $this->post('/logout')
+            ->assertRedirect('/login');
     }
 }
