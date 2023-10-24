@@ -8,15 +8,17 @@ use Tests\TestCase;
 
 class HomeControllerTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function test_example()
+    public function testGuest()
     {
-        $response = $this->get('/');
+        $this->get('/')
+            ->assertRedirect('/login');
+    }
 
-        $response->assertStatus(200);
+    public function testMember()
+    {
+        $this->withSession([
+            'user' => 'riyu'
+        ])->get('/')
+            ->assertRedirect('/todolist');
     }
 }
