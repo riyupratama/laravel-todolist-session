@@ -49,7 +49,7 @@ class UserControllerTest extends TestCase
         $this->withSession([
             'user' => 'riyu'
         ])->post('/logout')
-            ->assertRedirect('/')
+            ->assertRedirect('/login')
             ->assertSessionMissing('user');
     }
 
